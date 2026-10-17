@@ -1,0 +1,22 @@
+hook.appstart:     app_main
+hook.lwm_downlink: app_dl
+
+hook.uexti_irq:    door_irq
+
+hook.eefs_init:    door_cfg_load
+hook.eefs_fn:
+    - door_eefs_fn
+
+require:
+    - appstart
+    - lwmux
+    - lwtest
+    - frag
+    - fwman
+    - uexti
+    - eefs
+    - tabs_bvt
+    - tabs_led
+    - tabs_pwrman
+
+# vim: syntax=yaml

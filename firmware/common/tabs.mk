@@ -28,6 +28,11 @@ LMICCFG += extapi
 
 include $(TOPDIR)/projects/projects.gmk
 
+# must come after flash.cfg added by projects.gmk
+ifeq (wsms130,$(TARGET))
+OOFLAGS += -f ../common/wsms130-flash.cfg
+endif
+
 ifeq (simul,$(VARIANT))
 test: build-$(VARIANT)/$(PROJECT).hex
         PYTHONPATH=$${PYTHONPATH}:$(TOPDIR)/tools/pylora:$(TOPDIR)/unicorn/simul \

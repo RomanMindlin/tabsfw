@@ -1,0 +1,7 @@
+src:
+    - tabs/tabs_led.c
+
+require:
+    - tabs
+
+# vim: syntax=yaml

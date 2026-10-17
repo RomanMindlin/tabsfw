@@ -1,0 +1,7 @@
+src:
+    - tabs/tabs_bvt.c
+
+require:
+    - tabs
+
+# vim: syntax=yaml

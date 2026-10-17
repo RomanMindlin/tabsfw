@@ -1,0 +1,16 @@
+src:
+    - tabs/tabs_pwrman.c
+
+require:
+    - tabs_bvt
+    - pwrman
+    - eefs
+
+# MCU run/sleep time accounting in the HAL, used by pwrman
+define:
+    - CFG_rtstats
+
+hook.eefs_init: _tabs_pwrman_init
+hook.eefs_fn:   _tabs_pwrman_eefs_fn
+
+# vim: syntax=yaml

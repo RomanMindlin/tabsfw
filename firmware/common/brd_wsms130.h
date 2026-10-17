@@ -31,7 +31,7 @@
 
 // Antenna switch
 #define GPIO_TX         BRD_GPIO(PORT_A, 0)
-#define GPIO_RX         BRD_GPIO_EX(PORT_A, 1, BRD_GPIO_ACTIVE_LOW)
+#define GPIO_RX         BRD_GPIO(PORT_A, 1)
 
 // Enabled USART peripherals
 #define BRD_USART       (BRD_USART1)
@@ -52,7 +52,8 @@
 #define GPIO_LED0       BRD_GPIO(PORT_B, 5)
 #define BRD_LED_BLUE    GPIO_LED0
 
-// Hall sensor (Door/Window)
+// Door/Window sensor (reed switch on rev 0, hall sensor on rev 1+)
+#define GPIO_REED       BRD_GPIO(PORT_A, 12)
 #define GPIO_HALL       BRD_GPIO(PORT_A, 3)
 
 // Power
@@ -61,5 +62,16 @@
 #define GPIO_PSW        BRD_GPIO(PORT_A, 8) // voltage divider load switch
 #define BRD_ADC_TEMP    2                   // PA2, channel 2
 #define BRD_ADC_VBAT    8                   // PB0, channel 8
+
+// Battery
+#define BRD_BATT_MAH    1200                // battery capacity (mAh)
+#define BRD_BATT_REPL   0.5                 // battery replacement detection threshold (V)
+#define BRD_BATT_LOW    2.8                 // low battery voltage level (V)
+
+// Power consumption (MCU states include 25uA quiescent current of the board)
+#define BRD_PWR_RUN_UA  (6000 + 25)         // running
+#define BRD_PWR_S0_UA   (2000 + 25)         // sleep
+#define BRD_PWR_S1_UA   (12 + 25)           // low-power sleep
+#define BRD_PWR_S2_UA   (5 + 25)            // stop
 
 #endif
