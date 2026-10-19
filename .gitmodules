@@ -1,3 +1,4 @@
 [submodule "basicmac"]
 	path = basicmac
 	url = ../basicmac
+	branch = master
