@@ -56,6 +56,14 @@
 #define GPIO_REED       BRD_GPIO(PORT_A, 12)
 #define GPIO_HALL       BRD_GPIO(PORT_A, 3)
 
+// PIR sensor (configured via SERIN, motion events on DLINK)
+#define GPIO_PIR_SERIN  BRD_GPIO(PORT_B, 6)
+#define GPIO_PIR_DLINK  BRD_GPIO(PORT_B, 7)
+#if defined(SVC_tabs_pir)
+#define BRD_TMR         (BRD_TIM3)
+#define BRD_PIR_TMR     BRD_TIM3_PERIPH     // timer for serial interface
+#endif
+
 // Power
 #define GPIO_LSW        BRD_GPIO(PORT_A, 5) // battery load switch (diconnect battery from super caps)
 #define GPIO_SSW        BRD_GPIO(PORT_B, 1) // sensor board load switch
@@ -68,10 +76,17 @@
 #define BRD_BATT_REPL   0.5                 // battery replacement detection threshold (V)
 #define BRD_BATT_LOW    2.8                 // low battery voltage level (V)
 
-// Power consumption (MCU states include 25uA quiescent current of the board)
-#define BRD_PWR_RUN_UA  (6000 + 25)         // running
-#define BRD_PWR_S0_UA   (2000 + 25)         // sleep
-#define BRD_PWR_S1_UA   (12 + 25)           // low-power sleep
-#define BRD_PWR_S2_UA   (5 + 25)            // stop
+// Quiescent current of the board (and sensor)
+#if defined(SVC_tabs_pir)
+#define BRD_PWR_QUIESC_UA (25 + 3)          // PIR sensor
+#else
+#define BRD_PWR_QUIESC_UA 25
+#endif
+
+// Power consumption (MCU states include quiescent current of the board)
+#define BRD_PWR_RUN_UA  (6000 + BRD_PWR_QUIESC_UA) // running
+#define BRD_PWR_S0_UA   (2000 + BRD_PWR_QUIESC_UA) // sleep
+#define BRD_PWR_S1_UA   (12 + BRD_PWR_QUIESC_UA)   // low-power sleep
+#define BRD_PWR_S2_UA   (5 + BRD_PWR_QUIESC_UA)    // stop
 
 #endif

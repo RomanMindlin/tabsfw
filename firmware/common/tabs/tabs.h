@@ -39,6 +39,23 @@ unsigned char tabs_enc_temp (int32_t temp);
 
 
 // ------------------------------------------------
+// Configuration downlinks (tag-length-value, little endian)
+
+// NOTE: do not change tag values (append only!)
+enum {
+    TABS_CFGTAG_PORT            = 128,  // len=1
+    TABS_CFGTAG_DEFAULTS        = 129,  // len=0
+    TABS_CFGTAG_FIXED_DR        = 130,  // len=1  7:4 reserved, 3:0 DR 0-14, 15=ADR
+    TABS_CFGTAG_SETMAH          = 131,  // len=2  set mAh counter value
+};
+
+// append tag and len bytes of value to buffer
+void tabs_cfg_put_tagvalue (unsigned char tag, int len, uint32_t val, unsigned char** buf);
+// read len bytes value from buffer, return false if buffer is too short
+bool tabs_cfg_getlsbf (uint32_t* pval, int len, unsigned char** buf, unsigned char* end);
+
+
+// ------------------------------------------------
 // Shared convenience functions
 
 uint32_t tabs_minutes (void);
@@ -104,6 +121,18 @@ typedef void (*tabs_led_done) (unsigned int led);
 
 // blink LED count times (0: switch on if t_on is non-zero, off otherwise)
 void tabs_led (unsigned int led, ostime_t t_on, ostime_t t_off, unsigned int count, tabs_led_done done);
+
+#endif
+
+
+#if defined(SVC_tabs_pir)
+// ------------------------------------------------
+// PIR motion sensor (service tabs_pir)
+
+// initialize I/O lines
+void tabs_pir_init (void);
+// write 25-bit configuration word to sensor, cb is run on job when done
+void tabs_pir_config (uint32_t config, osjob_t* job, osjobcb_t cb);
 
 #endif
 

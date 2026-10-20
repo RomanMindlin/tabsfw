@@ -36,3 +36,23 @@ unsigned char tabs_enc_temp (int32_t temp) {
     }
     return temp + 32;
 }
+
+void tabs_cfg_put_tagvalue (unsigned char tag, int len, uint32_t val, unsigned char** buf) {
+    *(*buf)++ = tag;
+    while( len-- > 0 ) {
+        *(*buf)++ = val;
+        val >>= 8;
+    }
+}
+
+bool tabs_cfg_getlsbf (uint32_t* pval, int len, unsigned char** buf, unsigned char* end) {
+    uint32_t v = 0;
+    for( int i = 0; i < len; i++ ) {
+        if( *buf >= end ) {
+            return false;
+        }
+        v |= (*(*buf)++ << (8 * i));
+    }
+    *pval = v;
+    return true;
+}
