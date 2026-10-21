@@ -136,4 +136,47 @@ void tabs_pir_config (uint32_t config, osjob_t* job, osjobcb_t cb);
 
 #endif
 
+
+#if defined(SVC_tabs_sht20)
+// ------------------------------------------------
+// SHT20 temperature/humidity sensor (service tabs_sht20)
+
+enum {
+    TABS_SHT20_OK               = 0,
+    TABS_SHT20_ERROR            = -1,
+};
+
+typedef struct {
+    int8_t temp;        // temperature (°C)
+    uint8_t rh;         // relative humidity (%)
+} tabs_sht20_data;
+
+// measure temperature and humidity, cb is run on job when done (TABS_SHT20 status in *pstatus)
+void tabs_sht20_read (tabs_sht20_data* data, int* pstatus, osjob_t* job, osjobcb_t cb);
+
+#endif
+
+
+#if defined(SVC_tabs_ccs811)
+// ------------------------------------------------
+// CCS811 air quality sensor (service tabs_ccs811)
+
+enum {
+    TABS_CCS811_OK              = 0,
+    TABS_CCS811_ERROR           = -1,
+    TABS_CCS811_NOTREADY        = -2,   // no new measurement available
+};
+
+typedef struct {
+    uint16_t co2;       // equivalent CO2 (ppm)
+    uint16_t voc;       // total VOC (ppb)
+} tabs_ccs811_data;
+
+// start application and measurement (every 60s), cb is run on job when done (TABS_CCS811 status in *pstatus)
+void tabs_ccs811_init (int* pstatus, osjob_t* job, osjobcb_t cb);
+// write compensation values (°C, %RH; rh < 0: none) and read measurement, cb is run on job when done
+void tabs_ccs811_read (int temp, int rh, tabs_ccs811_data* data, int* pstatus, osjob_t* job, osjobcb_t cb);
+
+#endif
+
 #endif

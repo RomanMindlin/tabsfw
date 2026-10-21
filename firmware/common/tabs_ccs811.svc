@@ -1,0 +1,7 @@
+src:
+    - tabs/tabs_ccs811.c
+
+require:
+    - tabs
+
+# vim: syntax=yaml

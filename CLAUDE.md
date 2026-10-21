@@ -7,7 +7,8 @@ Basic MAC and Basic Loader. Most applications are ports of the TrackNet
 ## Layout
 
 - `firmware/` — applications, one directory per app:
-  - `tabs-door/`, `tabs-pir/` — production apps (door/window, PIR motion)
+  - `tabs-door/`, `tabs-pir/`, `tabs-airq/` — production apps (door/window,
+    PIR motion, air quality)
   - `doorwindow/` — older simple door/window app
   - `helloworld/` — minimal bring-up app (has its own standalone Makefile)
   - `common/` — code shared by all apps:
@@ -19,7 +20,9 @@ Basic MAC and Basic Loader. Most applications are ports of the TrackNet
       `BRD_IMPL_INC`)
     - `tabs/` + `tabs*.svc` — Tabs services: `tabs` (payload/config helpers),
       `tabs_bvt` (battery/temperature ADC), `tabs_led`, `tabs_pwrman`
-      (capacity accounting on top of `pwrman`), `tabs_pir` (PIR serial config)
+      (capacity accounting on top of `pwrman`), `tabs_pir` (PIR serial config),
+      `tabs_sht20`, `tabs_ccs811` (I2C temperature/humidity and eCO2/TVOC
+      sensors; they enable I2C1 on PB6/PB7, the same pins the PIR uses)
     - `wsms130.cfg`, `wsms130-flash.cfg` — OpenOCD config (ST-Link, SWD) and
       flash procs; the flash procs override `basicmac/tools/openocd/flash.cfg`
 - `bootloader/wsms130/` — builds Basic Loader for the WSMS130 (out-of-tree

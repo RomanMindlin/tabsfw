@@ -64,6 +64,17 @@
 #define BRD_PIR_TMR     BRD_TIM3_PERIPH     // timer for serial interface
 #endif
 
+// Air quality sensor board (SHT20 + CCS811 on I2C1, shares PB6/PB7 with PIR)
+#define GPIO_CCS811_WAKE BRD_GPIO(PORT_A, 4) // CCS811 nWAKE (active low, external pull-up)
+#if defined(SVC_tabs_sht20) || defined(SVC_tabs_ccs811)
+#define BRD_I2C         1                           // I2C1
+#define GPIO_I2C_SCL    BRD_GPIO_AF(PORT_B, 6, 1)   // PB6, alternate function 1
+#define GPIO_I2C_SDA    BRD_GPIO_AF(PORT_B, 7, 1)   // PB7, alternate function 1
+#endif
+#if defined(SVC_tabs_ccs811)
+#define BRD_PWR_CCS811_UA 700               // CCS811 average consumption (60s drive mode)
+#endif
+
 // Power
 #define GPIO_LSW        BRD_GPIO(PORT_A, 5) // battery load switch (diconnect battery from super caps)
 #define GPIO_SSW        BRD_GPIO(PORT_B, 1) // sensor board load switch

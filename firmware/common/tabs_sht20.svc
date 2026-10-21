@@ -1,0 +1,7 @@
+src:
+    - tabs/tabs_sht20.c
+
+require:
+    - tabs
+
+# vim: syntax=yaml

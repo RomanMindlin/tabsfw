@@ -1,0 +1,22 @@
+hook.appstart:     app_main
+hook.lwm_downlink: app_dl
+
+hook.eefs_init:    airq_cfg_load
+hook.eefs_fn:
+    - airq_eefs_fn
+
+require:
+    - appstart
+    - lwmux
+    - lwtest
+    - frag
+    - fwman
+    - eefs
+    - pwrman
+    - tabs_bvt
+    - tabs_led
+    - tabs_pwrman
+    - tabs_sht20
+    - tabs_ccs811
+
+# vim: syntax=yaml
